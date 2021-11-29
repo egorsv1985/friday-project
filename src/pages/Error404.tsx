@@ -1,11 +1,10 @@
-import React, { SVGProps} from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react'
+import {NavLink} from 'react-router-dom'
 import s from './Error404.module.css'
-import {PATH} from "../Routes";
-import Header from "../Header";
+import {PATH} from "./Routes";
+
 
 function Error404() {
-
 
     return (
         <div className={s.wrap}>
@@ -18,7 +17,7 @@ function Error404() {
                 <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is
                     temporarily unavailable</p>
 
-                <NavLink className={s.navLink} to={PATH.PRE_JUNIOR}>Go To Homepage</NavLink>
+                <NavLink className={s.navLink} to={PATH.PROFILE}>Go To Homepage</NavLink>
             </div>
         </div>
     )
