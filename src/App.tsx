@@ -1,26 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import SuperButton from "./components/c2-SuperButton/SuperButton";
+import SuperInputText from "./components/c1-SuperInputText/SuperInputText";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <h1>test</h1>
+            <SuperInputText />
+            <SuperButton>Like</SuperButton>
+        </div>
+    );
 }
 
 export default App;
