@@ -6,7 +6,9 @@ import Error404 from "./Error404";
 import ForgotPassword from "./ForgotPassword";
 import NewPassword from "./NewPassword";
 import Test from "./Test";
-import  {Route} from "react-router-dom";
+import {Route} from "react-router-dom";
+import React from "react";
+import TempHeader from "../temp/TempHeader";
 
 
 export const PATH = {
@@ -23,7 +25,9 @@ export const PATH = {
 function Routes() {
 
     return (
-        <Switch>
+        <>
+           <TempHeader/>
+            <Switch>
                 <Route path={'/'} exact render={() => <Redirect to={PATH.PROFILE}/>}/>
                 <Route path={PATH.LOGIN} render={() => <Login/>}/>
                 <Route path={PATH.SIGN_UP} render={() => <SignUp/>}/>
@@ -32,7 +36,8 @@ function Routes() {
                 <Route path={PATH.NEW_PASSWORD} render={() => <NewPassword/>}/>
                 <Route path={PATH.TEST} render={() => <Test/>}/>
                 <Route render={() => <Error404/>}/>
-        </Switch>
+            </Switch>
+        </>
     )
 }
 
