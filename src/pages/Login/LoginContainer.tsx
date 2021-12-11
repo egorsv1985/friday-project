@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {PATH} from "../Routes";
 import {Redirect} from "react-router-dom";
+import {Preloader} from "./Preloader";
 
 
 type ErrorsType = {
@@ -16,13 +17,14 @@ type ErrorsType = {
 
 
 function LoginContainer() {
-    const {isLoggedIn} = useSelector<AppStateType, AuthStateType>(state => state.auth)
+    const {isLoggedIn, loading, error} = useSelector<AppStateType, AuthStateType>(state => state.auth)
     const dispatch = useDispatch();
     if (isLoggedIn) {
         return <Redirect to={PATH.PROFILE}/>
     }
     return (
         <>
+            {loading && <Preloader/>}
             <Formik
                 initialValues={{email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: false}}
                 validate={values => {
@@ -48,7 +50,7 @@ function LoginContainer() {
             >
                 {
                     (props) => (
-                        <Login {...props} />
+                        <Login {...props} error={error} loading={loading}/>
                     )
                 }
 

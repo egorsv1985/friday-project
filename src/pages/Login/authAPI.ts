@@ -13,8 +13,12 @@ export const instance = axios.create({
 
 
 export const authAPI = {
+    me: async () => {
+        const response = await instance.post<IUser>('auth/me')
+        return response.data
+    },
     login: async (email: string, password:string, rememberMe:boolean) => {
         const response = await instance.post<IUser>('auth/login', {email, password, rememberMe})
         return response.data
-    }
+    },
 }

@@ -12,14 +12,14 @@ const user = useSelector<AppStateType, IUser | null>(state=>state.auth.user)
         <div>
             <div>
                 {
-                user !== null && <div>
+                user !== null? <div>
                     <img src={user.avatar} alt='avatar'/>
                     <p/>
                     Name: {user.name}
                     <p/>
                     E-Mail: {user.email}
                     <p/>
-                </div>
+                </div> : 'No data'
 
                 }
             </div>

@@ -3,11 +3,14 @@ import {Field, Form, FormikProps} from "formik";
 import {NavLink} from 'react-router-dom'
 import {PATH} from "../Routes";
 
-type LoginPropsType = FormikProps<any>
+type LoginPropsType = FormikProps<any> & {
+    error: string | null,
+    loading: boolean
+}
 
 
 export const Login: React.FC<LoginPropsType> =
-    ({handleSubmit, getFieldProps }) => {
+    ({handleSubmit, getFieldProps, error, loading }) => {
 
         return (
             <>
@@ -38,7 +41,7 @@ export const Login: React.FC<LoginPropsType> =
                 <NavLink to={PATH.SIGN_UP}>
                     Sign up
                 </NavLink>
-
+                {error !== null && <div style={{color: 'red'}}>{error}</div>}
             </>
 
         )
