@@ -9,6 +9,10 @@ export const instance = axios.create({
     withCredentials: true
 })
 
+export type DefaultResponse = {
+    info: string,
+    error?: string
+}
 
 
 
@@ -19,6 +23,11 @@ export const authAPI = {
     },
     login: async (email: string, password:string, rememberMe:boolean) => {
         const response = await instance.post<IUser>('auth/login', {email, password, rememberMe})
+        return response.data
+    },
+    logout: async () => {
+        const response = await instance.delete<DefaultResponse>('auth/me')
+        console.log('LOGOUT: ', response.data)
         return response.data
     },
 }

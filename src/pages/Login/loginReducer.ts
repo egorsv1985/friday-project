@@ -96,7 +96,6 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): T
 }
 
 
-
 export const initializingTC = (): ThunkAction<void, AppStateType, {}, any> => async (dispatch) => {
     dispatch(authActions.setLoading(true))
     try {
@@ -107,4 +106,15 @@ export const initializingTC = (): ThunkAction<void, AppStateType, {}, any> => as
         dispatch(authActions.setError(error))
     } finally {
     }
+}
+
+export const logoutTC = (): ThunkAction<void, AppStateType, {}, any> => async (dispatch) => {
+    dispatch(authActions.setLoading(true))
+    try {
+        const response = await authAPI.logout()
+        dispatch(authActions.setLoading(false))
+    } catch (e) {
+
+    }
+
 }

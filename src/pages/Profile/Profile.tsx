@@ -1,11 +1,17 @@
 import React from 'react'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
-import {IUser} from "../Login/loginReducer";
+import {IUser, logoutTC} from "../Login/loginReducer";
 
 
 function Profile() {
 const user = useSelector<AppStateType, IUser | null>(state=>state.auth.user)
+const dispatch = useDispatch()
+
+const logout = () => {
+    dispatch(logoutTC())
+}
+
 
 
     return (
@@ -23,6 +29,7 @@ const user = useSelector<AppStateType, IUser | null>(state=>state.auth.user)
 
                 }
             </div>
+            <button onClick={logout}>Logout</button>
         </div>
     )
 }
