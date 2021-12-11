@@ -1,10 +1,12 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {profileReducer} from "./profile-reducer";
 import thunkMiddleWare from 'redux-thunk'
+import {passwordRecoveryReducer} from "./passwordRecovery-reducer";
 
 
 let rootReducers = combineReducers({
     profile: profileReducer,
+    passwordRecovery: passwordRecoveryReducer
 })
 
 

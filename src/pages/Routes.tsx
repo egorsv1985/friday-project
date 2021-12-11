@@ -9,6 +9,7 @@ import Test from "./Test";
 import {Route} from "react-router-dom";
 import React from "react";
 import TempHeader from "../temp/TempHeader";
+import CheckEmail from "./CheckEmail";
 
 
 export const PATH = {
@@ -17,7 +18,8 @@ export const PATH = {
     PROFILE: '/profile',
     ERROR_404: '/error404',
     FORGOT_PASSWORD: '/forgotpassword',
-    NEW_PASSWORD: '/newpassword',
+    NEW_PASSWORD: '/set-new-password',
+    CHECK_EMAIL: '/checkemail',
     TEST: '/test',
 }
 
@@ -35,6 +37,7 @@ function Routes() {
                 <Route path={PATH.FORGOT_PASSWORD} render={() => <ForgotPassword/>}/>
                 <Route path={PATH.NEW_PASSWORD} render={() => <NewPassword/>}/>
                 <Route path={PATH.TEST} render={() => <Test/>}/>
+                <Route path={PATH.CHECK_EMAIL} render={() => <CheckEmail/>}/>
                 <Route render={() => <Error404/>}/>
             </Switch>
         </>
