@@ -1,6 +1,6 @@
 import {Redirect, Switch} from "react-router-dom"
 import Login from "./Login";
-import SignUp from "./SignUP";
+import SignUp from "./signUp/SignUP";
 import Profile from "./Profile";
 import Error404 from "./Error404";
 import ForgotPassword from "./ForgotPassword";

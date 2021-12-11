@@ -1,5 +1,9 @@
 import React from 'react'
 import {useFormik} from "formik";
+import {RequestStatusType, setErrorRegistrationAC, setNewUserTC} from "./signUp-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../redux/store";
+import {Redirect} from "react-router-dom";
 
 type FormikErrorType = {
     email?: string
@@ -8,6 +12,10 @@ type FormikErrorType = {
 }
 
 function SignUp() {
+
+    const error = useSelector<AppStateType, string | null>(state => state.signUp.error)
+    const status = useSelector<AppStateType, RequestStatusType>(state => state.signUp.status)
+    const dispatch = useDispatch()
 
     const formik = useFormik({
         initialValues: {
@@ -25,23 +33,30 @@ function SignUp() {
 
             if (!values.password) {
                 errors.password = 'Required';
-            } else if ( values.password.length < 3) {
-                errors.password = 'Length password should be 3 symbols';
+            } else if (values.password.length < 8) {
+                errors.password = 'Length password should be 8 symbols';
             }
 
             if (!values.confirmPassword) {
                 errors.confirmPassword = 'Required';
-            } else if ( values.confirmPassword.length < 3) {
-                errors.confirmPassword = 'Length password should be 3 symbols';
+            } else if (values.confirmPassword.length < 8) {
+                errors.confirmPassword = 'Length password should be 8 symbols';
+            } else if (values.password !== values.confirmPassword) {
+                dispatch(setErrorRegistrationAC('Please make sure you passwords match'));
             }
 
             return errors;
         },
         onSubmit: values => {
-            console.log(values)
+
+            dispatch(setNewUserTC(values.email, values.password))
             formik.resetForm()
-        },
+        }
     })
+
+    if (status === 'succeeded') {
+        return <Redirect to={'login'}/>
+    }
 
     return (
         <div>
@@ -73,7 +88,8 @@ function SignUp() {
                     />
                 </div>
 
-                {formik.touched.password && formik.errors.password && <div style={{color: 'red'}}>{formik.errors.password}</div>}
+                {formik.touched.password && formik.errors.password &&
+                <div style={{color: 'red'}}>{formik.errors.password}</div>}
 
                 <div>
                     <input
@@ -87,10 +103,13 @@ function SignUp() {
                     />
                 </div>
 
-                {formik.touched.confirmPassword && formik.errors.confirmPassword && <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>}
+                {formik.touched.confirmPassword && formik.errors.confirmPassword &&
+                <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>}
 
-                <button type="submit">Submit</button>
+                <button type="button" onClick={formik.handleReset}>Cancel</button>
+                <button type="submit">Sign Up</button>
             </form>
+            {error !== null && <div style={{color: 'red'}}>{error}</div>}
         </div>
     )
 }
