@@ -20,6 +20,7 @@ export const initialState: AuthStateType = {
 
 export type  IUser = {
     _id: string
+    avatar: string
     email: string
     name: string
     token:string
@@ -38,7 +39,6 @@ export type AuthActionsType = InferActionsType<typeof authActions>
 export const loginReducer = (state = initialState, action: AuthActionsType) => {
     switch (action.type) {
         case AuthEvents.SET_USER_DATA:
-            debugger
             return {...state, user: action.payload, isLoggedIn: true}
         default :
             return state
@@ -56,7 +56,6 @@ setUserData: (payload: IUser) => {
 
 export const loginTC = (email: string, password: string, rememberMe: boolean): ThunkAction<void, AppStateType, {}, any> => async (dispatch) => {
     try {
-        debugger
         const data = await authAPI.login(email, password, rememberMe);
         dispatch(authActions.setUserData(data))
     } catch (e) {

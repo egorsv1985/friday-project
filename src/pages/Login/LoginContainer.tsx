@@ -24,7 +24,7 @@ function LoginContainer() {
     return (
         <>
             <Formik
-                initialValues={{email: '', password: '', rememberMe: false}}
+                initialValues={{email: 'nya-admin@nya.nya', password: '1qazxcvBG', rememberMe: false}}
                 validate={values => {
                     const errors: ErrorsType = {};
 
