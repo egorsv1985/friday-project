@@ -85,11 +85,26 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): T
     try {
         const data = await authAPI.login(email, password, rememberMe);
         dispatch(authActions.setUserData(data))
+        dispatch(authActions.setLoading(false))
     } catch (e:any) {
         const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
         dispatch(authActions.setError(error))
     }
     finally {
-        dispatch(authActions.setLoading(false))
+
+    }
+}
+
+
+
+export const initializingTC = (): ThunkAction<void, AppStateType, {}, any> => async (dispatch) => {
+    dispatch(authActions.setLoading(true))
+    try {
+        const data = await authAPI.me()
+        dispatch(authActions.setUserData(data))
+    } catch (e:any) {
+        const error = e.response ? e.response.data.error : (e.message + ", more details in the console")
+        dispatch(authActions.setError(error))
+    } finally {
     }
 }

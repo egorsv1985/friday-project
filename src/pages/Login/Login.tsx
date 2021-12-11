@@ -36,7 +36,7 @@ export const Login: React.FC<LoginPropsType> =
                         {...getFieldProps('rememberMe')}
                     />
                     <p/>
-                    <button type={'submit'}>Login</button>
+                    <button type={'submit'} disabled={loading}>Login</button>
                 </Form>
                 <NavLink to={PATH.SIGN_UP}>
                     Sign up
