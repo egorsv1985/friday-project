@@ -2,13 +2,15 @@ import {Redirect, Switch} from "react-router-dom"
 import SignUp from "./signUp/SignUP";
 import Profile from "./Profile/Profile";
 import Error404 from "./Error404";
-import ForgotPassword from "./ForgotPassword";
-import NewPassword from "./NewPassword";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import NewPassword from "./ForgotPassword/NewPassword";
 import Test from "./Test";
 import {Route} from "react-router-dom";
 import React from "react";
 import TempHeader from "../temp/TempHeader";
 import {LoginPage} from "./Login/LoginPage";
+import CheckEmail from "./ForgotPassword/CheckEmail";
+
 
 
 export const PATH = {
@@ -17,7 +19,8 @@ export const PATH = {
     PROFILE: '/profile',
     ERROR_404: '/error404',
     FORGOT_PASSWORD: '/forgotpassword',
-    NEW_PASSWORD: '/newpassword',
+    NEW_PASSWORD: '/set-new-password/:token',
+    CHECK_EMAIL: '/checkemail',
     TEST: '/test',
 }
 
@@ -35,10 +38,11 @@ function Routes() {
                 <Route path={PATH.FORGOT_PASSWORD} render={() => <ForgotPassword/>}/>
                 <Route path={PATH.NEW_PASSWORD} render={() => <NewPassword/>}/>
                 <Route path={PATH.TEST} render={() => <Test/>}/>
+                <Route path={PATH.CHECK_EMAIL} render={() => <CheckEmail/>}/>
                 <Route render={() => <Error404/>}/>
             </Switch>
         </>
     )
 }
 
-export default Routes
+export default Routes;
