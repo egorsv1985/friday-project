@@ -8,7 +8,11 @@ const instance = axios.create({
 
 export const RegistrationAPI = {
     signUp(email: string, password: string) {
-        return instance.post('auth/register', {email, password})
+        return instance.post<SignUpDataType>('auth/register', {email, password})
 
     }
+}
+
+type SignUpDataType = {
+    error?: string
 }
