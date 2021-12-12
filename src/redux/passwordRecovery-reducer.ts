@@ -1,6 +1,10 @@
 import {Dispatch} from 'redux';
 import {passwordRecoveryAPI} from '../api/passwordRecoveryAPI';
+import {setAppError, setAppStatus} from "./app-reducer";
+import errorResponseHandler from "../utils/errorResponseHandler";
 
+
+export type RecoveryStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 type InitialStateType = {
     email: string
@@ -10,7 +14,7 @@ const initialState: InitialStateType = {
     email: '',
 }
 
-export type PasswordRecoveryActionsType = ReturnType<typeof setEmail>
+export type PasswordRecoveryActionsType = setEmailActionType
 
 
 export const passwordRecoveryReducer = (state = initialState, action: PasswordRecoveryActionsType): InitialStateType => {
@@ -24,16 +28,32 @@ export const passwordRecoveryReducer = (state = initialState, action: PasswordRe
     }
 }
 
+type setEmailActionType = ReturnType<typeof setEmail>
 export const setEmail = (email: string) => ({
     type: 'SET_EMAIL',
     payload: {email}
 } as const);
 
-export const passwordRecovery = (email: string, message: string) => async (dispatch: Dispatch<PasswordRecoveryActionsType>) => {
+export const passwordRecovery = (email: string, message: string) => async (dispatch: Dispatch) => {
     try {
+        dispatch(setAppError({error: ''}))
+        dispatch(setAppStatus({status: 'loading'}));
         await passwordRecoveryAPI.passRecovery(email, message);
+        dispatch(setAppStatus({status: 'succeeded'}));
         dispatch((setEmail(email)))
-    } catch (e) {
-        console.log(e)
+    } catch (e: any) {
+        errorResponseHandler(e, dispatch)
     }
 }
+
+export const inputNewPassword = (password: string, resetPasswordToken: string | undefined) => async (dispatch: Dispatch) => {
+    try {
+        dispatch(setAppError({error: ''}))
+        dispatch(setAppStatus({status: 'loading'}));
+        await passwordRecoveryAPI.inputNewPass(password, resetPasswordToken);
+        dispatch(setAppStatus({status: 'succeeded'}));
+    } catch (e) {
+        errorResponseHandler(e, dispatch)
+    }
+}
+

@@ -3,13 +3,13 @@ import Login from "./Login";
 import SignUp from "./SignUP";
 import Profile from "./Profile";
 import Error404 from "./Error404";
-import ForgotPassword from "./ForgotPassword";
-import NewPassword from "./NewPassword";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import NewPassword from "./ForgotPassword/NewPassword";
 import Test from "./Test";
 import {Route} from "react-router-dom";
 import React from "react";
 import TempHeader from "../temp/TempHeader";
-import CheckEmail from "./CheckEmail";
+import CheckEmail from "./ForgotPassword/CheckEmail";
 
 
 export const PATH = {
@@ -18,7 +18,7 @@ export const PATH = {
     PROFILE: '/profile',
     ERROR_404: '/error404',
     FORGOT_PASSWORD: '/forgotpassword',
-    NEW_PASSWORD: '/set-new-password',
+    NEW_PASSWORD: '/set-new-password/:token',
     CHECK_EMAIL: '/checkemail',
     TEST: '/test',
 }

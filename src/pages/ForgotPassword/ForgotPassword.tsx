@@ -1,9 +1,10 @@
 import React from 'react'
 import {useFormik} from "formik";
-import {NavLink, Redirect, useHistory} from "react-router-dom";
-import {PATH} from "./Routes";
-import {useDispatch} from "react-redux";
-import {passwordRecovery, setEmail} from "../redux/passwordRecovery-reducer";
+import {NavLink, Redirect} from "react-router-dom";
+import {PATH} from "../Routes";
+import {useDispatch, useSelector} from "react-redux";
+import {passwordRecovery, RecoveryStatusType} from "../../redux/passwordRecovery-reducer";
+import {AppStateType} from "../../redux/store";
 
 type FormikErrorType = {
     email?: string
@@ -13,9 +14,9 @@ function ForgotPassword() {
     const messageForEmail = `<div style={{'backgroundColor': 'lime', 'padding': '15px'}}>Password recovery link:<a href='http://localhost:3000/friday-project#/set-new-password/$token$'> link</a></div>`
 
 
-
     const dispatch = useDispatch();
-    const history = useHistory();
+    const appStatus = useSelector<AppStateType, RecoveryStatusType>(state => state.app.status);
+    const appError = useSelector<AppStateType, string>(state => state.app.error);
 
     const formik = useFormik({
         initialValues: {
@@ -32,15 +33,18 @@ function ForgotPassword() {
         },
         onSubmit: (values) => {
             dispatch(passwordRecovery(values.email, messageForEmail))
-            history.push(PATH.CHECK_EMAIL)
         },
     })
 
 
+    if (appStatus === 'succeeded') {
+        return <Redirect to={PATH.CHECK_EMAIL}/>
+    }
 
     return (
         <div>
             <h3>Forgot your password?</h3>
+            {appStatus === 'loading' && <p style={{color: "green", margin: 0}}>Loading...</p>}
             <div>
                 <form onSubmit={formik.handleSubmit}>
                     <div>
@@ -48,6 +52,7 @@ function ForgotPassword() {
                             id="email"
                             name="email"
                             type="email"
+                            disabled={appStatus === 'loading'}
                             onChange={formik.handleChange}
                             value={formik.values.email}
                             placeholder="Email"
@@ -55,11 +60,13 @@ function ForgotPassword() {
                         />
                     </div>
 
-                    {formik.touched.email && formik.errors.email && <div style={{color: 'red'}}>{formik.errors.email}</div>}
+                    {formik.touched.email && formik.errors.email &&
+                    <div style={{color: 'red'}}>{formik.errors.email}</div>}
+                    {appError && <div style={{color: 'red'}}>{appError}</div>}
 
                     <p>Enter your email address and we will send you further instructions</p>
 
-                    <button type="submit">Send Instructions </button>
+                    <button type="submit" disabled={appStatus === 'loading'}>Send Instructions</button>
                 </form>
                 <p>Did you remember your password?</p>
                 <NavLink to={PATH.LOGIN}>Try logging in</NavLink>
