@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {RegistrationAPI} from "./signUp-api";
 
+
 const SET_ERROR_REGISTRATION = "SET_ERROR_REGISTRATION"
 const SET_STATUS_REGISTRATION = "SET_STATUS_REGISTRATION"
 
