@@ -1,14 +1,12 @@
-import axios from "axios";
-
-const instance = axios.create({
-    withCredentials: true,
-    // baseURL: 'https://back-from-friday-project.herokuapp.com/2.0/'
-    baseURL: 'http://localhost:7542/2.0/'
-})
+import {instance} from "../../api/instanceAPI";
 
 export const RegistrationAPI = {
     signUp(email: string, password: string) {
-        return instance.post('auth/register', {email, password})
+        return instance.post<SignUpDataType>('auth/register', {email, password})
 
     }
+}
+
+type SignUpDataType = {
+    error?: string
 }

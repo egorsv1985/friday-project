@@ -4,6 +4,8 @@ import {RequestStatusType, setErrorRegistrationAC, setNewUserTC} from "./signUp-
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {Redirect} from "react-router-dom";
+import {PATH} from "../Routes";
+import {Preloader} from "../Login/Preloader";
 
 type FormikErrorType = {
     email?: string
@@ -55,11 +57,12 @@ function SignUp() {
     })
 
     if (status === 'succeeded') {
-        return <Redirect to={'login'}/>
+        return <Redirect to={PATH.LOGIN}/>
     }
 
     return (
-        <div>
+        <>
+            {status === 'loading' && <Preloader/>}
             <h1>Sign Up Page</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div>
@@ -107,11 +110,12 @@ function SignUp() {
                 <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>}
 
                 <button type="button" onClick={formik.handleReset}>Cancel</button>
-                <button type="submit">Sign Up</button>
+                <button type="submit" disabled={status === 'loading'}>Sign Up</button>
             </form>
             {error !== null && <div style={{color: 'red'}}>{error}</div>}
-        </div>
+        </>
     )
 }
+
 
 export default SignUp
